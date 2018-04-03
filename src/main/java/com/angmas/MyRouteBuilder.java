@@ -17,13 +17,13 @@ public class MyRouteBuilder extends RouteBuilder {
         .choice()
             .when(header("ext").isEqualTo("txt"))
                 .setHeader("CamelAwsS3Key").simple("text-files/${headers.CamelFileName}")
-                .to("aws-s3://my-camel-example-bucket?region=US_EAST_1&accessKey="+accessKey+"&secretKey=RAW("+secretKey+")")
+                .to("aws-s3://my-camel-example-bucket?amazonS3Client=#s3Client")
             .when(header("ext").isEqualTo("html"))
                 .setHeader("CamelAwsS3Key").simple("html-files/${headers.CamelFileName}")
-                .to("aws-s3://my-camel-example-bucket?region=US_EAST_1&accessKey="+accessKey+"&secretKey=RAW("+secretKey+")")
+                .to("aws-s3://my-camel-example-bucket?amazonS3Client=#s3Client")
             .otherwise()
                 .setHeader("CamelAwsS3Key").simple("other-files/${headers.CamelFileName}")
-                .to("aws-s3://my-camel-example-bucket?region=US_EAST_1&accessKey="+accessKey+"&secretKey=RAW("+secretKey+")");
+                .to("aws-s3://my-camel-example-bucket?amazonS3Client=#s3Client");
 
     }
 
